@@ -5,6 +5,11 @@
 
 int main()
 {
+	std::cout << "##### - PARSER - #####\n";
+	std::cout << "\nAvailable options for a json are next: \n";
+	std::cout << Config::TargetFolderPath << "\n";
+	std::cout << Config::FileExtensionsToIgnore << " [ ]\n\n";
+
 	try
 	{
 		ConfigFile ParserConfig;
@@ -13,10 +18,8 @@ int main()
 	}
 	catch (const std::exception& ex)
 	{
-		std::cerr << "Exception occurred during opening " << Config::ConfigFileName << ": " << ex.what() << "\n";
-		std::cout << "Available options for a json are next: \n";
-		std::cout << Config::TargetFolderPath << "\n";
-		std::cout << Config::FileExtensionsToIgnore << " [ ]\n";
+		std::cerr << "Exception occurred: " << ex.what() << "\n";
+		
 		return 1;
 	}
 

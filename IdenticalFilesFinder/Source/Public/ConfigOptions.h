@@ -24,7 +24,7 @@ public:
 	~ConfigFile();
 
 	const std::set<std::string>& GetExtensionsToIgnore() const;
-	const std::string GetTargetFolderPath() const noexcept;
+	const fs::path GetTargetFolderPath() const noexcept;
 
 protected:
 	void From_Json(const json& Json);
@@ -33,7 +33,7 @@ protected:
 
 private:
 	std::set<std::string> ExtensionsToIgnore;
-	std::string TargetFolderPath;
+	fs::path TargetFolderPath;
 
 	std::ifstream FileHandle;
 };

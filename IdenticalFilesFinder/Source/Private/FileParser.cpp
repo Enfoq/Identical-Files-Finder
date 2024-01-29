@@ -12,7 +12,13 @@ void FileParser::CollectIdenticalFilesMap()
 		return;
 	}
 
-	const std::string Path = Options->GetTargetFolderPath();
+	const fs::path Path(Options->GetTargetFolderPath());
+	if (!fs::exists(Path))
+	{
+		std::cerr << "\n[ERROR] Path: " << Path.u8string() << " is not valid.\n";
+		return;
+	}
+
 	IgnoredExtensions = Options->GetExtensionsToIgnore();
 
 	std::cout << "\n##### Start processing Path: " << Path << "\n";

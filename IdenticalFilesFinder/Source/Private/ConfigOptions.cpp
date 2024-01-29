@@ -23,7 +23,7 @@ const std::set<std::string>& ConfigFile::GetExtensionsToIgnore() const
 	return ExtensionsToIgnore;
 }
 
-const std::string ConfigFile::GetTargetFolderPath() const noexcept
+const fs::path ConfigFile::GetTargetFolderPath() const noexcept
 {
 	return TargetFolderPath;
 }
@@ -39,9 +39,8 @@ void ConfigFile::InitConfig()
 	try
 	{
 		FileHandle.open(Config::ConfigFileName);
-		json ConfigJson;
+		json ConfigJson = json::parse(FileHandle);
 
-		FileHandle >> ConfigJson;
 		From_Json(ConfigJson);
 		PrintOptions();
 

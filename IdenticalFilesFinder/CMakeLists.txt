@@ -10,6 +10,7 @@ include_directories(Source)
 set(SOURCE_FILES
     Source/Private/FileParser.cpp
     Source/Private/FileWrapper.cpp
+    Source/Private/ConfigOptions.cpp
     Source/Main.cpp
 )
 
