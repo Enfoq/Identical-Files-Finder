@@ -36,13 +36,13 @@ private:
 		Hash map that contains path to all files with identical hash (as a key).
 	*/
 	std::mutex IdenticalFilesMapMtx;
-	std::unordered_map <size_t, std::vector <std::string>> IdenticalFilesMap;
+	std::unordered_map <size_t, std::vector <fs::path>> IdenticalFilesMap;
 
 	/**
 		Hash map that contains path to all files with identical size (as a key).
 	*/
 	std::mutex IdenticalSizesFileMapMtx;
-	std::unordered_map<size_t, std::vector<std::string>> IdenticalSizesFileMap;
+	std::unordered_map<size_t, std::vector<fs::path>> IdenticalSizesFileMap;
 
 	const ConfigFile *Options = nullptr;
 	std::set<std::string> IgnoredExtensions;

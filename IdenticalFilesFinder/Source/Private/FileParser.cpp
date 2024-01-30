@@ -15,7 +15,7 @@ void FileParser::CollectIdenticalFilesMap()
 	const fs::path Path(Options->GetTargetFolderPath());
 	if (!fs::exists(Path))
 	{
-		std::cerr << "\n[ERROR] Path: " << Path.u8string() << " is not valid.\n";
+		std::cerr << "\n[ERROR] Path: " << Path << " is not valid.\n";
 		return;
 	}
 
@@ -59,7 +59,7 @@ void FileParser::AddFileToIdenticalSizesFileMap(const fs::path& FilePath)
 	}
 
 	std::lock_guard<std::mutex> HashMapLock(IdenticalSizesFileMapMtx);
-	IdenticalSizesFileMap[Size].push_back(FilePath.string());
+	IdenticalSizesFileMap[Size].push_back(FilePath);
 }
 
 void FileParser::ProcessFilesWithIdenticalSize()
@@ -76,7 +76,7 @@ void FileParser::ProcessFilesWithIdenticalSize()
 		{
 			try
 			{
-				WorkingThreads.emplace_back(&FileParser::AddFileToIdenticalFilesMap, this, FilePath);
+				WorkingThreads.emplace_back(&FileParser::AddFileToIdenticalFilesMap, this, std::cref(FilePath));
 			}
 			catch (const std::system_error& ex)
 			{
@@ -139,7 +139,7 @@ void FileParser::AddFileToIdenticalFilesMap(const fs::path& FilePath)
 	}
 
 	std::lock_guard<std::mutex> HashMapLock(IdenticalFilesMapMtx);
-	IdenticalFilesMap[FileHash].push_back(FilePath.string());
+	IdenticalFilesMap[FileHash].push_back(FilePath);
 }
 
 bool FileParser::IsFolderEmptry(const fs::path& FolderPath)
@@ -190,6 +190,7 @@ void FileParser::WriteToFile()
 	try
 	{
 		OutputFile.open(Config::OutputFileName);
+		OutputFile.imbue(std::locale("en_US.UTF8"));
 	}
 	catch (const std::exception& ex)
 	{
@@ -210,7 +211,7 @@ void FileParser::WriteToFile()
 		OutputFile << "##### Identical Files.\n";
 		for (const auto& FilePath : MapEntry.second)
 		{
-			OutputFile << FilePath << "\n";
+			OutputFile << FilePath.u8string() << "\n";
 		}
 
 		OutputFile << "#####\n";
