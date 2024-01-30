@@ -13,7 +13,7 @@ namespace Config
 {
 	static const std::string TargetFolderPath		= "TargetFolderPath";
 	static const std::string FileExtensionsToIgnore	= "FileExtensionsToIgnore";
-	static const std::string OutputFileName			= "Result.txt";
+	static const std::string OutputFileName			= "Output.txt";
 	static const std::string ConfigFileName			= "Config.json";
 }
 
