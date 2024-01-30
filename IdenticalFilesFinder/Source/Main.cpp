@@ -15,7 +15,6 @@
 int main()
 {
 #ifdef _MSC_VER
-	_setmode(_fileno(stderr), _O_U8TEXT);
 	SetConsoleOutputCP(1251);
 	SetConsoleCP(1251);
 #else
