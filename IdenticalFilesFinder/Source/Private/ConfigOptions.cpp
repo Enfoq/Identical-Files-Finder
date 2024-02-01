@@ -72,7 +72,7 @@ void ConfigFile::InitConfig()
 
 void ConfigFile::PrintOptions(const json& Json) const
 {
-	std::cout << "[*]Enabled options: \n";
+	std::cout << "[*] Enabled options: \n";
 	std::string DumpJson = Json.dump(2);
 	std::cout << fs::u8path(DumpJson).string() << "\n";
 }

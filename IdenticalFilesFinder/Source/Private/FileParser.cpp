@@ -191,7 +191,7 @@ void FileParser::WriteToFile()
 	catch (const std::exception& ex)
 	{
 		std::cerr << "[ERROR] occurred: " << ex.what() << "\n";
-		std::cerr << "Print to console instead.\n";
+		std::cerr << "[*] Print to console instead.\n";
 		PrintToConsole();
 
 		return;
@@ -213,7 +213,7 @@ void FileParser::WriteToFile()
 		OutputFile << "#####\n";
 	}
 
-	std::cout << "[*]Successfully wrote result to " << Config::OutputFileName << "\n";
+	std::cout << "[*] Successfully wrote result to " << Config::OutputFileName << "\n";
 
 	OutputFile.close();
 }
