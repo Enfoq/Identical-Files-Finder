@@ -8,7 +8,7 @@ void FileParser::CollectIdenticalFilesMap()
 {
 	if (Options == nullptr)
 	{
-		std::cerr << "Config file is a null pointer. Exiting\n";
+		std::cerr << "\n[ERROR] Config file is a null pointer. Exiting\n";
 		return;
 	}
 
@@ -21,13 +21,11 @@ void FileParser::CollectIdenticalFilesMap()
 
 	IgnoredExtensions = Options->GetExtensionsToIgnore();
 
-	std::cout << "\n##### Start processing Path: " << Path << "\n";
+	std::cout << "\n[*] Start processing Path: " << Path << "\n";
 
 	CollectFilesWithIdenticalSize(Path);
 	ProcessFilesWithIdenticalSize();
 	OutputResultOfParsing();
-
-	std::cout << "##### FINISHED #####\n";
 }
 
 void FileParser::CollectFilesWithIdenticalSize(const fs::path& Path)
@@ -80,13 +78,11 @@ void FileParser::ProcessFilesWithIdenticalSize()
 			}
 			catch (const std::system_error& ex)
 			{
-				// Handle the thread creation error
-				std::cerr << "Error creating thread: " << ex.what() << " (" << ex.code() << ")" << std::endl;
+				std::cerr << "[ERROR] on thread constructing: " << ex.what() << " (" << ex.code() << ")" << std::endl;
 			}
 			catch (const std::exception& ex)
 			{
-				// Handle other exceptions
-				std::cerr << "An error occurred: " << ex.what() << std::endl;
+				std::cerr << "[ERROR]: " << ex.what() << std::endl;
 			}
 		}
 
@@ -111,11 +107,11 @@ void FileParser::ProcessFoldersConcurrently(const std::vector<fs::path>& Folders
 		}
 		catch (const std::system_error& ex)
 		{
-			std::cerr << "Error creating thread: " << ex.what() << " (" << ex.code() << ")" << std::endl;
+			std::cerr << "[ERROR] on thread constructing: " << ex.what() << " (" << ex.code() << ")" << std::endl;
 		}
 		catch (const std::exception& ex)
 		{
-			std::cerr << "An error occurred: " << ex.what() << std::endl;
+			std::cerr << "[ERROR]: " << ex.what() << std::endl;
 		}
 	}
 
@@ -156,7 +152,7 @@ void FileParser::OutputResultOfParsing()
 {
 	if (Options == nullptr)
 	{
-		std::cerr << "Config file is a nullptr. Will print the result to console.\n";
+		std::cerr << "[ERROR] Config file is a nullptr. Will print the result to console.\n";
 		PrintToConsole();
 		
 		return;
@@ -174,7 +170,7 @@ void FileParser::PrintToConsole()
 			continue;
 		}
 
-		std::cout << "##### Identical Files.\n";
+		std::cout << "##### Identical Files\n";
 		for (const auto& FilePath : MapEntry.second)
 		{
 			std::cout << FilePath << "\n";
@@ -194,7 +190,7 @@ void FileParser::WriteToFile()
 	}
 	catch (const std::exception& ex)
 	{
-		std::cerr << "Exception occurred: " << ex.what() << "\n";
+		std::cerr << "[ERROR] occurred: " << ex.what() << "\n";
 		std::cerr << "Print to console instead.\n";
 		PrintToConsole();
 
@@ -208,7 +204,7 @@ void FileParser::WriteToFile()
 			continue;
 		}
 
-		OutputFile << "##### Identical Files.\n";
+		OutputFile << "##### Identical Files\n";
 		for (const auto& FilePath : MapEntry.second)
 		{
 			OutputFile << FilePath.u8string() << "\n";
@@ -217,7 +213,7 @@ void FileParser::WriteToFile()
 		OutputFile << "#####\n";
 	}
 
-	std::cout << "Successfully wrote result to " << Config::OutputFileName << "\n";
+	std::cout << "[*]Successfully wrote result to " << Config::OutputFileName << "\n";
 
 	OutputFile.close();
 }

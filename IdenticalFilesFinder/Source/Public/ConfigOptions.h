@@ -27,9 +27,10 @@ public:
 	const fs::path GetTargetFolderPath() const noexcept;
 
 protected:
+	void HelpInfoPrint() const;
 	void From_Json(const json& Json);
 	void InitConfig();
-	void PrintOptions() const;
+	void PrintOptions(const json& Json) const;
 
 private:
 	std::set<std::string> ExtensionsToIgnore;
