@@ -1,6 +1,7 @@
 #include <iostream>
 #include <filesystem>
 #include <locale>
+#include <codecvt>
 
 #include <Public/ConfigOptions.h>
 
@@ -8,6 +9,7 @@ namespace fs = std::filesystem;
 
 ConfigFile::ConfigFile()
 {
+	HelpInfoPrint();
 	InitConfig();
 }
 
@@ -29,6 +31,17 @@ const fs::path ConfigFile::GetTargetFolderPath() const noexcept
 	return TargetFolderPath;
 }
 
+void ConfigFile::HelpInfoPrint() const
+{
+	json Json;
+	Json[Config::TargetFolderPath] = "<path>";
+	Json[Config::FileExtensionsToIgnore] = { "extensions" };
+
+	std::cout << "[*] Config file options available:\n";
+	std::cout << Json.dump(2);
+	std::cout << "\n\n";
+}
+
 void ConfigFile::From_Json(const json& Json)
 {
 	/*
@@ -45,13 +58,11 @@ void ConfigFile::InitConfig()
 	try
 	{
 		FileHandle.open(Config::ConfigFileName);
-		FileHandle.imbue(std::locale("en_US.UTF8"));
-
 		json ConfigJson = json::parse(FileHandle);
 		FileHandle.close();
 
 		From_Json(ConfigJson);
-		PrintOptions();
+		PrintOptions(ConfigJson);
 	}
 	catch (const std::exception&)
 	{
@@ -59,17 +70,9 @@ void ConfigFile::InitConfig()
 	}
 }
 
-void ConfigFile::PrintOptions() const
+void ConfigFile::PrintOptions(const json& Json) const
 {
-	std::cout << "##### Parse options: \n";
-	std::cout << Config::TargetFolderPath << ": " << TargetFolderPath << "\n";
-	std::cout << Config::FileExtensionsToIgnore << "[";
-
-	for (const auto& Extension : ExtensionsToIgnore)
-	{
-		std::cout << Extension << " ";
-	}
-
-	std::cout << "]";
-	std::cout << "\n#####  -  ######\n";
+	std::cout << "[*]Enabled options: \n";
+	std::string DumpJson = Json.dump(2);
+	std::cout << fs::u8path(DumpJson).string() << "\n";
 }

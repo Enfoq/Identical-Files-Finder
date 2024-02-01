@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <chrono>
 #ifdef _MSC_VER
 #include <fcntl.h>
 #include <io.h>
@@ -12,6 +13,8 @@
 #include <Public/FileParser.h>
 #include <Public/ConfigOptions.h>
 
+void PrettyOutput();
+
 int main()
 {
 #ifdef _MSC_VER
@@ -22,11 +25,9 @@ int main()
 	std::locale::global(std::locale(""));
 #endif
 
-	std::cout << "##### - PARSER - #####\n";
-	std::cout << "\nAvailable options for a json are next: \n";
-	std::cout << Config::TargetFolderPath << "\n";
-	std::cout << Config::FileExtensionsToIgnore << " [ ]\n\n";
+	PrettyOutput();
 
+	std::chrono::steady_clock::time_point StartDirtyMeasuring = std::chrono::high_resolution_clock::now();
 	try
 	{
 		ConfigFile ParserConfig;
@@ -40,6 +41,25 @@ int main()
 		return 1;
 	}
 
+	std::chrono::steady_clock::time_point EndDirtyMeasuring = std::chrono::high_resolution_clock::now();
+	auto Duration = std::chrono::duration_cast<std::chrono::milliseconds>(EndDirtyMeasuring - StartDirtyMeasuring);
+	std::cout << "[*] Processed in: " << Duration.count() / 1000.f << " seconds.\n";
+
+	
+#ifdef _MSC_VER
+	system("pause");
+#else
 	std::cin.get();
+#endif
+
 	return 0;
+}
+
+
+void PrettyOutput()
+{
+	std::cout << "#############################################\n";
+	std::cout << "####\tFind Binary identical Files\t#####\n";
+	std::cout << "####\tAuthor Dmytro Hurin\t\t#####\n";
+	std::cout << "#############################################\n\n";
 }
