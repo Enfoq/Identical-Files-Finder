@@ -37,7 +37,11 @@ int main()
 	catch (const std::exception& ex)
 	{
 		std::cerr << "Exception occurred: " << ex.what() << "\n";
-		
+#ifdef _MSC_VER
+		system("pause");
+#else
+		std::cin.get();
+#endif
 		return 1;
 	}
 
