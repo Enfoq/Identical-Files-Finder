@@ -28,7 +28,7 @@ const size_t FileWrapper::GetFileContentHash()
 	auto FileSize = GetFileSize();
 	if (FileSize == 0 || FileSize == UINTMAX_MAX)
 	{
-		std::cerr << "Cannot retrieve size of file: " << "\n";
+		std::cerr << "[ERROR]: Cannot retrieve size of the file with path -  " << "\n";
 
 		return 0;
 	}
@@ -36,7 +36,7 @@ const size_t FileWrapper::GetFileContentHash()
 	File.open(Path, std::ios_base::binary);
 	if (!File.is_open())
 	{
-		std::cerr << "Error opening file: " << Path << "\n";
+		std::cerr << "[ERROR] File hasn't been opened: " << Path << "\n";
 
 		return 0;
 	}
@@ -50,14 +50,14 @@ const size_t FileWrapper::GetFileContentHash()
 	}
 	catch (const std::exception& e)
 	{
-		std::cerr << "Cannot read file: " << Path << "\n";
-		std::cerr << "Exception: " << e.what() << "\n";
+		std::cerr << "[ERROR] Couldn't read the file: " << Path << "\n";
+		std::cerr << "[*]Exception: " << e.what() << "\n";
 
 		return 0;
 	}
 	catch (...)
 	{
-		std::cerr << "Unknown exception happened with file: " << Path.string() << "\n";
+		std::cerr << "[ERROR] Unexpected error happened with file: " << Path.string() << "\n";
 
 		return 0;
 	}
