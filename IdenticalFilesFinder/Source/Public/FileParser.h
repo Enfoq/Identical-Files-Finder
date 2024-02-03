@@ -10,13 +10,6 @@ class FileParser
 public:
 
 	FileParser(const ConfigFile* Opts) : Options(Opts) {};
-
-	/************************************************************************/
-	/* This method collects all files concurrently in given path to HashMap <hash, path>.
-	* It is synchronized.
-	* @return copy of HashMap with hash as a key and path as a value. So don't need to lock on the returned value.
-	*/
-	/************************************************************************/
 	void CollectIdenticalFilesMap();
 
 private:
