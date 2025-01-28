@@ -1,1 +1,73 @@
+# Visual Studio-specific files
+.vs/
+*.vcxproj
+*.sln
+*.vcxproj.user
+*.vcxproj.filters
+*.suo
+*.user
+*.ncb
+*.log
+*.cache
+*.pdb
+*.opendb
+*.tlog/
+
+# Build directories (CMake)
 build/
+Build/
+bin/
+Bin/
+Intermediate/
+CMakeFiles/
+CMakeCache.txt
+CMakeScripts/
+Testing/
+CTestTestfile.cmake
+cmake_install.cmake
+
+# Compiled object files
+*.obj
+*.o
+*.lo
+*.la
+*.al
+*.libs
+*.dll
+*.exe
+*.so
+*.dylib
+*.lib
+*.a
+*.exp
+
+# IDE-specific
+*.idea/
+.idea/
+*.sln.iml
+*.code-workspace
+*.vsworkspace
+
+# Editor backups and temp files
+*.swp
+*.bak
+*.tmp
+*.temp
+*.~*
+
+# Logs and debugging
+*.log
+*.diag
+*.dmp
+
+# Generated files
+Makefile
+CMakeLists.txt.user
+
+# Excluded files from Visual Studio Code
+.vscode/
+*.code-workspace
+
+# System files
+.DS_Store
+Thumbs.db
